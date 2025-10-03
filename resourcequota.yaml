@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: express-quota
+  namespace: default
+spec:
+  hard:
+    pods: "5"                 # max number of pods in this namespace
+    requests.cpu: "2"         # total minimum CPU requests allowed
+    requests.memory: 2Gi      # total minimum memory requests allowed
+    limits.cpu: "4"           # total CPU limit across all pods
+    limits.memory: 4Gi        # total memory limit across all pods
+    persistentvolumeclaims: "3"   # max PVCs allowed

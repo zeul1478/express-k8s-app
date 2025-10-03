@@ -1,0 +1,16 @@
+# dependencies
+node_modules
+
+# temporary files
+npm-debug.log
+*.log
+secret.txt
+
+# git stuff
+.git
+.gitignore
+
+# editor/system stuff
+.DS_Store
+.vscode
+
