@@ -41,7 +41,7 @@ jobs:
     - name: Scan Docker image for vulnerabilities
       uses: aquasecurity/trivy-action@0.12.0
       with:
-        image-ref: zeul1478/express-sample:${{ github.sha }}
+        image-ref: zeul1478/express-sample:${{github.sha}}
         format: table
         exit-code: 1
         ignore-unfixed: true
