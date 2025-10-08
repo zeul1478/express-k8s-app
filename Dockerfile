@@ -3,16 +3,14 @@
 
     WORKDIR /app
     
-    # Copy only package files first (better caching)
+    # Copy package files first (better caching)
     COPY package*.json ./
     
     # Install dependencies
     RUN npm install --production
     
-    # Copy ONLY the app source code, not config files
+    # Copy ONLY the app source code
     COPY app.js ./
-    # Or if you have more source files, create a src directory and copy that
-    # COPY src/ ./src/
     
     # ---- Stage 2: Run lightweight container ----
     FROM node:18
@@ -22,8 +20,13 @@
     # Copy only the built app from builder
     COPY --from=builder /app /app
     
-    # Add non-root user for security
-    RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+    # Add non-root user for security (Alpine Linux syntax)
+    RUN addgroup -g 1001 -S appgroup && \
+        adduser -S -u 1001 -G appgroup appuser
+    
+    # Change ownership of the app directory
+    RUN chown -R appuser:appgroup /app
+    
     USER appuser
     
     EXPOSE 3000
