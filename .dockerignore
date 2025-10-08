@@ -1,16 +1,19 @@
-# dependencies
-node_modules
-
-# temporary files
-npm-debug.log
-*.log
-secret.txt
-
-# git stuff
-.git
+# In your .dockerignore file
+.github/
+.git/
+node_modules/
+*.yaml
+*.yml
 .gitignore
-
-# editor/system stuff
-.DS_Store
-.vscode
-
+README.md
+LICENSE
+*.txt
+configmap.yaml
+deployment.yaml
+ingress.yaml
+postgres-*
+pv.yaml
+pvc.yaml
+resourcequota.yaml
+secret.*
+test-pod.yaml

@@ -19,7 +19,7 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: 18
+        node-version: 18-alpine
 
     # Install dependencies
     - name: Install dependencies
@@ -39,7 +39,7 @@ jobs:
 
     # Security scan with Trivy (Docker image vulnerabilities)
     - name: Scan Docker image for vulnerabilities
-      uses: aquasecurity/trivy-action@0.12.0
+      uses: aquasecurity/trivy-action@0.14.0
       with:
         image-ref: zeul1478/express-sample:${{ github.sha }}
         format: table
