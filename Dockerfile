@@ -1,5 +1,5 @@
-# Use Node.js Alpine base image
-FROM node:18-alpine
+# Use Node.js base image
+FROM node:18
 
 WORKDIR /app
 
@@ -12,7 +12,7 @@ RUN npm install --production
 # Copy app source
 COPY app.js ./
 
-# Create non-root user (Alpine compatible)
+# Create non-root user
 RUN addgroup -g 1001 appgroup && \
     adduser -D -u 1001 -G appgroup appuser && \
     chown -R appuser:appgroup /app
