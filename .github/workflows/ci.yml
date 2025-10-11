@@ -64,3 +64,10 @@ jobs:
         docker push zeul1478/express-sample:${{ github.sha }}
         docker tag zeul1478/express-sample:${{ github.sha }} zeul1478/express-sample:latest
         docker push zeul1478/express-sample:latest
+
+
+    # Deploy to local Kubernetes
+    - name: Deploy to local Kubernetes
+      run: |
+        chmod +x ./scripts/deploy-to-local.sh
+        ./scripts/deploy-to-local.sh
