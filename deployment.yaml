@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: express-app
-        image: express-sample:1.2
+        image: zeul1478/express-sample:latest
         ports:
         - containerPort: 3000
         envFrom:

@@ -1,5 +1,5 @@
-# Use Node.js Alpine base image
-FROM node:18-alpine
+# Use Node.js base image
+FROM node:18
 
 WORKDIR /app
 
@@ -12,12 +12,8 @@ RUN npm install --production
 # Copy app source
 COPY app.js ./
 
-# Create non-root user (Alpine compatible)
-RUN addgroup -g 1001 appgroup && \
-    adduser -D -u 1001 -G appgroup appuser && \
-    chown -R appuser:appgroup /app
-
-USER appuser
+# Use node user (already exists in the image) instead of creating new user
+USER node
 
 EXPOSE 3000
 
