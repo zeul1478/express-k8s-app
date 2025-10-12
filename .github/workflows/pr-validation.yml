@@ -30,5 +30,9 @@ jobs:
     - name: Run tests
       run: npm test --if-present
 
-    - name: Verify Docker build
-      run: docker build -t pr-test .
+    # Build and Push Docker Image
+    - name: Build and Push to Docker Hub
+      run: |
+        echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+        docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/express-k8s-app:${{ github.sha }} .
+        docker push ${{ secrets.DOCKERHUB_USERNAME }}/express-k8s-app:${{ github.sha }}
