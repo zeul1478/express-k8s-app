@@ -1,0 +1,48 @@
+name: Test Docker Hub Login - Safe Method
+
+on:
+  workflow_dispatch:  # Manual trigger only
+
+jobs:
+  test-login:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    # Debug: Check if secrets exist (but don't reveal them)
+    - name: Check secret configuration
+      run: |
+        echo "Checking GitHub secrets setup..."
+        if [ -n "${{ secrets.DOCKERHUB_USERNAME }}" ]; then
+          echo "✅ DOCKERHUB_USERNAME is configured"
+        else
+          echo "❌ DOCKERHUB_USERNAME is missing"
+          exit 1
+        fi
+        
+        if [ -n "${{ secrets.DOCKERHUB_TOKEN }}" ]; then
+          echo "✅ DOCKERHUB_TOKEN is configured"
+        else
+          echo "❌ DOCKERHUB_TOKEN is missing"
+          exit 1
+        fi
+        echo "All secrets are present in repository settings"
+
+    # Your actual login step - THIS IS THE TEST
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    # Confirmation step
+    - name: Login successful
+      run: |
+        echo "🎉 Docker Hub login completed successfully!"
+        echo "This means:"
+        echo "1. Your DOCKERHUB_USERNAME secret is correct"
+        echo "2. Your DOCKERHUB_TOKEN secret is valid"
+        echo "3. The login-action can authenticate with Docker Hub"
+        echo ""
+        echo "You're ready to add Docker build/push steps!"
