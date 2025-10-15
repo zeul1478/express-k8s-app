@@ -35,13 +35,13 @@ jobs:
 
     # Build Docker image
     - name: Build Docker image
-      run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/express-k8s-app:${{ github.sha }} .  # ← CHANGED
+      run: docker build -t zeul1478/express-sample:${{ github.sha }} .
 
     # Security scan with Trivy (Docker image vulnerabilities)
     - name: Scan Docker image for vulnerabilities
       uses: aquasecurity/trivy-action@0.14.0
       with:
-        image-ref: ${{ secrets.DOCKERHUB_USERNAME }}/express-k8s-app:${{ github.sha }}  # ← CHANGED
+        image-ref: zeul1478/express-sample:${{ github.sha }}
         format: table
         exit-code: 1
         ignore-unfixed: true
@@ -55,15 +55,16 @@ jobs:
     - name: Log in to Docker Hub
       uses: docker/login-action@v2
       with:
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_TOKEN }}
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
 
     # Push Docker image
     - name: Push Docker image
       run: |
-        docker push ${{ secrets.DOCKERHUB_USERNAME }}/express-k8s-app:${{ github.sha }} 
-        docker tag ${{ secrets.DOCKERHUB_USERNAME }}/express-k8s-app:${{ github.sha }} ${{ secrets.DOCKERHUB_USERNAME }}/express-k8s-app:latest  
-        docker push ${{ secrets.DOCKERHUB_USERNAME }}/express-k8s-app:latest  
+        docker push zeul1478/express-sample:${{ github.sha }}
+        docker tag zeul1478/express-sample:${{ github.sha }} zeul1478/express-sample:latest
+        docker push zeul1478/express-sample:latest
+
 
     # Deploy to local Kubernetes
     - name: Deploy to local Kubernetes
